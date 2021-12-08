@@ -27,7 +27,7 @@ public:
         sp->nchan = channelCount;
         
         sp_ptrack_create(&ptrack);
-        sp_ptrack_init(sp, ptrack, 1024, 20);
+        sp_ptrack_init(sp, ptrack, 2048, 25);
     }
     
     void deinit() override {
