@@ -22,6 +22,14 @@ open class FrequencyTracker: Node {
     public var frequency: Float {
         akFrequencyTrackerGetFrequency(au.dsp)
     }
+    
+    public var amplitude: Float {
+        akFrequencyTrackerGetAmplitude(au.dsp)
+    }
+    
+    public var measureCounter: UInt32 {
+        akFrequencyTrackerGetMeasureCounter(au.dsp)
+    }
 
     // MARK: - Initialization
 

@@ -13,3 +13,5 @@ AK_API void akConvolutionSetPartitionLength(DSPRef dsp, int length);
 AK_API void akFlatFrequencyResponseSetLoopDuration(DSPRef dsp, float duration);
 AK_API void akVariableDelaySetMaximumTime(DSPRef dsp, float maximumTime);
 AK_API float akFrequencyTrackerGetFrequency(DSPRef dspRef);
+AK_API float akFrequencyTrackerGetAmplitude(DSPRef dspRef);
+AK_API unsigned int akFrequencyTrackerGetMeasureCounter(DSPRef dspRef);

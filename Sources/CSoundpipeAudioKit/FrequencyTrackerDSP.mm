@@ -15,6 +15,7 @@ private:
 public:
     float trackedAmplitude = 0.0;
     float trackedFrequency = 0.0;
+    unsigned int measureCounter = 0;
     
     FrequencyTrackerDSP() {
     }
@@ -27,7 +28,7 @@ public:
         sp->nchan = channelCount;
         
         sp_ptrack_create(&ptrack);
-        sp_ptrack_init(sp, ptrack, 1024, 25);
+        sp_ptrack_init(sp, ptrack, 2048 , 20 );
     }
     
     void deinit() override {
@@ -66,8 +67,8 @@ public:
             float &leftOut = outputSample(0, i);
             sp_ptrack_compute(sp, ptrack, &leftIn, &trackedFrequency, &trackedAmplitude);
             
-            if(trackedAmplitude < 0.04) {
-                trackedFrequency = 0;
+            if(ptrack->cnt == 1) {
+                measureCounter++;
             }
             
             float rightIn = inputSample(1, i);
@@ -81,6 +82,18 @@ AK_API float akFrequencyTrackerGetFrequency(DSPRef dspRef) {
     auto dsp = dynamic_cast<FrequencyTrackerDSP *>(dspRef);
     assert(dsp);
     return dsp->trackedFrequency;
+}
+
+AK_API float akFrequencyTrackerGetAmplitude(DSPRef dspRef) {
+    auto dsp = dynamic_cast<FrequencyTrackerDSP *>(dspRef);
+    assert(dsp);
+    return dsp->trackedAmplitude;
+}
+
+AK_API unsigned int akFrequencyTrackerGetMeasureCounter(DSPRef dspRef) {
+    auto dsp = dynamic_cast<FrequencyTrackerDSP *>(dspRef);
+    assert(dsp);
+    return dsp->measureCounter;
 }
 
 AK_REGISTER_DSP(FrequencyTrackerDSP, "ptrk")
